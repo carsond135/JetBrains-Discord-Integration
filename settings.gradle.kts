@@ -1,15 +1,17 @@
 rootProject.name = "JetBrains-Discord-Integration"
 
-include("icons")
-include("plugin")
-include("uploader")
-include("bot")
+include(":icons")
+include(":plugin")
+include(":uploader")
+include(":bot")
+include(":discord-game-sdk:jvm")
+include(":discord-game-sdk:native")
+include(":tools:jniheaders")
 
 pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        maven(url = "https://palantir.bintray.com/releases")
     }
 
     val properties = java.util.Properties().apply {
