@@ -1,3 +1,5 @@
+@file:Suppress("SuspiciousCollectionReassignment")
+
 import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
@@ -48,17 +50,18 @@ subprojects {
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                apiVersion = "1.4"
-                languageVersion = "1.4"
-                jvmTarget = "11"
-                @Suppress("SuspiciousCollectionReassignment")
+                jvmTarget = "1.8"
                 freeCompilerArgs += "-Xjvm-default=enable"
             }
         }
 
         withType<JavaCompile> {
-            @Suppress("UnstableApiUsage")
-            options.release.set(11)
+            targetCompatibility = "1.8"
+            sourceCompatibility = "1.8"
+
+            if (JavaVersion.current() >= JavaVersion.VERSION_1_9) {
+                options.compilerArgs as MutableList<String> += listOf("--release", "8")
+            }
         }
     }
 }
@@ -71,7 +74,7 @@ tasks {
 
         rejectVersionIf {
             sequenceOf("alpha", "beta", "rc", "cr", "m", "preview", "eap", "pr", "M")
-                .map { qualifier -> Regex("""[+_.-]?$qualifier[.\d-_]*$""", kotlin.text.RegexOption.IGNORE_CASE) }
+                .map { qualifier -> Regex("""[+_.-]?$qualifier[.\d-_]*$""", RegexOption.IGNORE_CASE) }
                 .any { regex -> regex.containsMatchIn(candidate.version) }
         }
 

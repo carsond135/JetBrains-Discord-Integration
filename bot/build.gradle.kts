@@ -28,8 +28,6 @@ dependencies {
     val versionKonf: String by project
     val versionLogback: String by project
 
-    implementation(platform(kotlin(module = "bom")))
-
     implementation(kotlin(module = "stdlib"))
 
     implementation(kotlin(module = "script-util"))
