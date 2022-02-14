@@ -1,5 +1,5 @@
 import com.google.common.collect.Multimaps
-import com.google.common.collect.SetMutlimaps
+import com.google.common.collect.SetMultimap
 import org.apache.commons.io.FilenameUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin

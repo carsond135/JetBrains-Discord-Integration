@@ -1,0 +1,90 @@
+<idea-plugin url="https://github.com/Almighty-Alpaca/JetBrains-Discord-Integration" require-restart="true">
+    <id>com.almightyalpaca.intellij.plugins.discord</id>
+    <name>Discord Integration</name>
+    <vendor email="aljoschagrebe@gmail.com" url="https://github.com/Almighty-Alpaca">Almighty Alpaca</vendor>
+
+    <idea-version since-build="203"/>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <depends optional="true" config-file="git-extension.xml">Git4Idea</depends>
+
+    <applicationListeners>
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.diagnose.DiagnoseAppLifecycleListener"
+                topic="com.intellij.ide.AppLifecycleListener"/>
+
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.render.RenderAppLifecycleListener"
+                topic="com.intellij.ide.AppLifecycleListener"/>
+
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.development.PreventUnloadingDynamicPluginListener"
+                topic="com.intellij.ide.plugins.DynamicPluginListener"/>
+
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.time.TimeDynamicPluginListener"
+                topic="com.intellij.ide.plugins.DynamicPluginListener"/>
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.time.TimeProjectManagerListener"
+                topic="com.intellij.openapi.project.ProjectManagerListener"/>
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.time.TimeAppLifecycleListener"
+                topic="com.intellij.ide.AppLifecycleListener"/>
+        <listener
+                class="com.almightyalpaca.jetbrains.plugins.discord.plugin.time.TimeFileEditorManagerListener"
+                topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </applicationListeners>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService
+                serviceInterface="com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.ProjectSettings"
+                serviceImplementation="com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.impl.ProjectSettingsImpl"/>
+        <applicationService
+                serviceInterface="com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.ApplicationSettings"
+                serviceImplementation="com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.impl.ApplicationSettingsImpl"/>
+
+        <applicationConfigurable
+                groupId="other"
+                groupWeight="200"
+                displayName="Discord"
+                id="discord-application"
+                instance="com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.ApplicationConfigurable"/>
+
+        <projectConfigurable
+                groupId="discord-application"
+                groupWeight="200"
+                displayName="Project"
+                id="discord-project"
+                nonDefaultProject="false"
+                instance="com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.ProjectConfigurable"/>
+
+        <backgroundPostStartupActivity
+                implementation="com.almightyalpaca.jetbrains.plugins.discord.plugin.notifications.NotificationPostStartupActivity"/>
+    </extensions>
+
+    <actions>
+        <group id="DiscordActionGroup"
+               text="Discord"
+               popup="true"
+               icon="/discord/images/logo/blurple.svg">
+            <add-to-group group-id="ToolsMenu"/>
+
+            <action id="DiscordActionGroup.ApplicationHideAction"
+                    class="com.almightyalpaca.jetbrains.plugins.discord.plugin.actions.ApplicationShowAction"/>
+            <group id="DiscordActionGroup.ProjectShowAction"
+                   class="com.almightyalpaca.jetbrains.plugins.discord.plugin.actions.ProjectShowAction"/>
+
+            <separator/>
+
+            <action id="DiscordActionGroup.RenderUpdateAction"
+                    class="com.almightyalpaca.jetbrains.plugins.discord.plugin.actions.ForceRenderUpdateAction"/>
+            <action id="DiscordActionGroup.ReconnectAction"
+                    class="com.almightyalpaca.jetbrains.plugins.discord.plugin.actions.ForceReconnectAction"/>
+        </group>
+    </actions>
+
+    <extensionPoints>
+        <extensionPoint name="vcsInfo" interface="com.almightyalpaca.jetbrains.plugins.discord.plugin.extensions.VcsInfoExtension" dynamic="true"/>
+    </extensionPoints>
+</idea-plugin>
