@@ -1,0 +1,17 @@
+name: Markdown
+asset: markdown
+parent: text
+match:
+  extension:
+    equals:
+      - .md
+      - .markdown
+      - .mdown
+      - .mkd
+      - .mkdown
+      - .mdwn
+      - .rmd
+      - .pmw
+      - .mson
+
+# .ron (removed due to Rusty Object Notation)

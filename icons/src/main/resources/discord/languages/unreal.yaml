@@ -1,0 +1,25 @@
+name: Unreal
+asset: unreal
+parent: text
+match:
+  extension:
+    equals:
+      - u
+      - unr
+      - utx
+      - umx
+      - uax
+      - ukx
+      - uz
+      - upkg
+      - uc
+      - upl
+      - obj
+      - asc
+      - lwo
+flavor:
+  - name: UnrealScript
+    id: sript
+    match:
+      extension:
+        equals: .uc

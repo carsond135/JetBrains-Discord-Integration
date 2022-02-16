@@ -1,0 +1,8 @@
+name: Vue.js
+asset: vue
+parent: javascript
+match:
+  extension:
+    equals:
+      - .vue
+      - .vuex

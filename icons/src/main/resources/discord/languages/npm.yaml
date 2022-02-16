@@ -1,0 +1,20 @@
+name: NPM
+asset: npm
+parent: nodejs/text
+match:
+  name:
+    equals:
+      - package.json
+flavors:
+  - name: NPM Lock
+    match:
+      name:
+        equals: package-lock.json
+  - name: NPM Ignore
+    match:
+      name:
+        equals: .npmignore
+  - name: NPM Config
+    match:
+      name:
+        equals: .npmrc

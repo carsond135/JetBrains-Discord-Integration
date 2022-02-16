@@ -1,0 +1,15 @@
+name: TypeScript
+asset: typescript
+parent: text
+match:
+  extension:
+    equals:
+      - .ts
+      - .tslint
+flavors:
+  - name: TypeScript Test
+    match:
+      extension:
+        equals:
+          - .test.ts
+          - .spec.ts

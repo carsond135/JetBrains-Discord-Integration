@@ -1,0 +1,21 @@
+name: Ruby
+asset: ruby
+parent: text
+match:
+  extension:
+    equals: .rb
+flavors:
+  - name: Ruby Test
+    match:
+      extension:
+        equals:
+          - .test.rb
+          - .spec.rb
+
+# TODO: Ruby
+# .watchr
+# (?i)\\.(rb|ru|ruby|erb|gemspec|god|mspec|pluginspec|podspec|rabl|rake|opal)$
+# (?i)^\\.?(irbrc|gemrc|pryrc|ruby-(gemset|version))$
+# ^(Appraisals|(Rake|[bB]uild|Cap|Danger|Deliver|Fast|Guard|Jar|Maven|Pod|Puppet|Snap)file(\\.lock)?)$/
+# (?i)\\.(jbuilder|rbuild|rb[wx]|builder)$
+# ^rails$/

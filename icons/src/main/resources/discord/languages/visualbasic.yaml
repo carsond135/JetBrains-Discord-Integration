@@ -1,0 +1,14 @@
+name: Visual Basic
+asset: visualbasic
+parent: text
+match:
+  extension:
+    equals:
+      - .cls # (class file)
+      - .frm # (form)
+      - .frx # (form - binary information)
+      - .ctl # (custom control)
+      - .ctx # (custom control binary information)
+      - .vbp # (project)
+      - .vbg # (project group)
+      - .bas # (module)

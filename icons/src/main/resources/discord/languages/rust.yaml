@@ -1,0 +1,9 @@
+name: Rust
+asset: rust
+parent: text
+match:
+  extension:
+    equals:
+      - .rust
+      - .rs
+      - .rslib

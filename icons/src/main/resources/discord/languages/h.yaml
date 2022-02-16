@@ -1,0 +1,9 @@
+name: H
+asset: h
+parent: text
+match:
+  extension:
+    equals:
+      # Disabled due to conflict with C headers
+      # - .h
+      - .objh

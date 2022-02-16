@@ -1,0 +1,33 @@
+name: Gradle
+parent: text
+asset: gradle
+match:
+  path:
+    contains: .gradle/
+flavors:
+  - name: Gradle Groovy
+    parent: groovy
+    match:
+      extension:
+        equals: .gradle
+  - name: Gradle Kotlin
+    parent: kotlin
+    match:
+      extension:
+        equals: .gradle.kts
+  - name: Gradle Wrapper
+    flavors:
+      - parent: shell
+        match:
+          name:
+            equals:
+              - gradlew
+      - parent: batch
+        match:
+          name:
+            equals:
+              - gradlew.bat
+  - name: Gradle Properties
+    match:
+      name:
+        equals: gradle.properties

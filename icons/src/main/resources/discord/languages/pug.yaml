@@ -1,0 +1,8 @@
+name: Pug
+asset: pug
+parent: html
+match:
+  extension:
+    equals:
+      - .pug
+      - .jade

@@ -1,0 +1,11 @@
+name: Backbone.js
+asset: backbone
+parent: javascript
+match:
+  name:
+    equals:
+      - backbone.js
+      - backbone.min.js
+      - backbone-min.js
+      - backbone.dev.js
+      - backbone-dev.js

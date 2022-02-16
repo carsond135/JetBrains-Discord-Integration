@@ -1,0 +1,16 @@
+name: C#
+asset: csharp
+parent: text
+match:
+  extension:
+    equals:
+      - .cs
+      - .csproj
+flavors:
+  - name: C# Script
+    asset: csharpscript
+    match:
+      extension:
+        equals:
+          - .csx
+          - .csscript

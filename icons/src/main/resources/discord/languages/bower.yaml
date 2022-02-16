@@ -1,0 +1,12 @@
+name: Bower
+asset: bower
+parent: json
+match:
+  extension:
+    equals:
+      - .bower
+      - .bowerrc
+  name:
+    equals:
+      - bower.json
+      - Bowerfile

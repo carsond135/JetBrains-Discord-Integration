@@ -1,0 +1,8 @@
+name: Hack
+asset: hack
+parent: php
+match:
+  extension:
+    equals:
+#      - .hh
+      - .hhconfig

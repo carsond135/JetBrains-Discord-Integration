@@ -1,0 +1,10 @@
+name: CMake
+asset: cmake
+parent: text
+match:
+  extension:
+    equals: .cmake
+  name:
+    equals:
+      - CMakeLists
+      - CMakeLists.txt

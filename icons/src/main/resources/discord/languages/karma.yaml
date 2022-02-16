@@ -1,0 +1,15 @@
+name: Karma
+asset: karma
+flavors:
+  - parent: javascript
+    match:
+      name:
+        equals: karma.conf.js
+  - parent: coffeescript
+    match:
+      name:
+        equals: karma.conf.coffee
+  - parent: typescript
+    match:
+      name:
+        equals: karma.conf.ts

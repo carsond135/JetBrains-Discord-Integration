@@ -1,0 +1,20 @@
+name: Docker
+asset: docker
+parent: text
+match:
+  name:
+    equals:
+      - Dockerfile
+      - .dockerfile
+      - .dockerignore
+      - docker-sync.yml
+      - .extra
+flavor:
+  - name: Docker Compose
+    parent: yaml
+    match:
+      name:
+        equals:
+          - docker-compose
+          - docker-compose.yml
+          - docker-compose.yaml

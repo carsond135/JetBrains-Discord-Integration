@@ -1,0 +1,37 @@
+name: Java
+asset: java
+parent: text
+match:
+  extension:
+    equals:
+      - .java
+      - .jar
+flavors:
+  - name: Java Class
+    parent: binary
+    match:
+      extension:
+        equals:
+          - .class
+  - name: Java Server Pages
+    match:
+      extension:
+        equals:
+          - .jsp
+          # Disabled due to incompatibility with React's .jsx
+          # - .jsx
+          - .jsf
+          - .war
+          - .ear
+  - name: Java Bean
+    match:
+      name:
+        endsWith: Bean.java
+  - name: Java Test
+    match:
+      name:
+        endsWith: Test.java
+  - name: Java Properties
+    match:
+      extension:
+        equals: .properties

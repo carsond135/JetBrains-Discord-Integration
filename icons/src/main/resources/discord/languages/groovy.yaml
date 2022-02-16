@@ -1,0 +1,13 @@
+name: Groovy
+asset: groovy
+parent: text
+match:
+  extension:
+    equals:
+      - .groovy
+      - .grt
+      - .gtpl
+      - .gsp
+      - .gv
+      - .gvy
+      - .gdsl

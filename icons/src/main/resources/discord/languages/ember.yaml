@@ -1,0 +1,16 @@
+name: Ember
+asset: ember
+parent: javascript
+match:
+  extension:
+    equals: .ember.json
+flavor:
+  - name: Ember CLI
+    id: cli
+    match:
+      extension:
+        equals: .ember-cli
+
+# TODO: ember regex
+#  name:
+#    regex: "^ember(\\.|(-[^.]+)?-(\\d+\\.)+(debug\\.)?)js

@@ -1,0 +1,14 @@
+name: Clojure
+asset: clojure
+parent: text
+match:
+  extension:
+    equals:
+      - .clj
+      - .cl2
+      - .cljc
+      - .cljx
+      - .hic
+      - .cljs
+      - .clojure
+      - .cljscm

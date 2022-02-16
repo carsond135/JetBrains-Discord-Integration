@@ -1,0 +1,26 @@
+name: PHP
+asset: php
+parent: text
+match:
+  extension:
+    equals:
+      - .php
+      - .phps
+      - .phpt
+      - .php1
+      - .php2
+      - .php3
+      - .php4
+      - .php5
+      - .php6
+      - .php7
+      - .php8
+      - .php9
+      - .php_cs
+      - .phtml
+flavors:
+  - name: PHP Archive
+    parent: archive
+    match:
+      extension:
+        equals: .phar

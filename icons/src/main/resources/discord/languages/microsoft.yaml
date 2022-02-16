@@ -1,0 +1,7 @@
+name: Microsoft
+asset: microsoft
+flavors:
+  - id: binary
+    parent: binary
+  - id: text
+    parent: text

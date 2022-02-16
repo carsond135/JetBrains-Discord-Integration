@@ -1,0 +1,9 @@
+name: Lua
+asset: lua
+parent: text
+match:
+  extension:
+    equals:
+      - .lua
+      - .pd_lua
+      - .wlua

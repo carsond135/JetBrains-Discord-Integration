@@ -1,0 +1,8 @@
+name: RSS
+asset: rss
+parent: xml
+match:
+  extension:
+    equals:
+      - .rss
+     # - .xml # Disabled

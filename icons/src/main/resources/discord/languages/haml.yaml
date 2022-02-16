@@ -1,0 +1,6 @@
+name: HAML
+asset: haml
+parent: text
+match:
+  extension:
+    equals: .haml
