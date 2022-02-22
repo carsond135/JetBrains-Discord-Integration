@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.bot.utils
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.time
 
-import net.dv8tion.jda.api.entities.Member
+import com.intellij.ide.AppLifecycleListener
+import com.intellij.openapi.project.Project
 
-fun Member.modifyRoles(rolesToAdd: Collection<Long>, rolesToRemove: Collection<Long>) =
-    guild.modifyMemberRoles(this, rolesToAdd.map { requireNotNull(guild.getRoleById(it)) }, rolesToRemove.map { requireNotNull(guild.getRoleById(it)) })
+class TimeAppLifecycleListener : AppLifecycleListener {
+    override fun appStarting(projectFromCommandLine: Project?) {
+        timeService.load()
+    }
+}

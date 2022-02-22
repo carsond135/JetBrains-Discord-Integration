@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.bot.utils
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options
 
-import net.dv8tion.jda.api.entities.Member
+import javax.swing.JComponent
 
-fun Member.modifyRoles(rolesToAdd: Collection<Long>, rolesToRemove: Collection<Long>) =
-    guild.modifyMemberRoles(this, rolesToAdd.map { requireNotNull(guild.getRoleById(it)) }, rolesToRemove.map { requireNotNull(guild.getRoleById(it)) })
+interface ComponentProvider {
+    val component: JComponent?
+}

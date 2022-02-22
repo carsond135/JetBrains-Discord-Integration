@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.bot.utils
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values
 
-import net.dv8tion.jda.api.entities.Member
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.render.RenderContext
 
-fun Member.modifyRoles(rolesToAdd: Collection<Long>, rolesToRemove: Collection<Long>) =
-    guild.modifyMemberRoles(this, rolesToAdd.map { requireNotNull(guild.getRoleById(it)) }, rolesToRemove.map { requireNotNull(guild.getRoleById(it)) })
+interface RenderedValue<T> {
+    fun RenderContext.getResult(): T
+
+    fun get(context: RenderContext) = context.run { getResult() }
+}

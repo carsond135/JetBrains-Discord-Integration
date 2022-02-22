@@ -15,3 +15,9 @@
  */
 
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.utils
+
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vcs.changes.ChangeListManager
+import com.intellij.openapi.vfs.VirtualFile
+
+fun isVcsIgnored(project: Project, file: VirtualFile) = ChangeListManager.getInstance(project).isIgnoredFile(file)

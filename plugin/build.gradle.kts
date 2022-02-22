@@ -39,6 +39,9 @@ dependencies {
 repositories {
     mavenCentral()
     maven("https://jitpack.io")
+    flatDir {
+        dirs("${project.rootDir.absolutePath}/.jars")
+    }
 }
 
 val generatedSourceDir = project.file("src/generated")
