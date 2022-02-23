@@ -56,7 +56,7 @@ class ClasspathSource(path: String, retry: Boolean = true) : Source, CoroutineSc
 
     override fun getLanguagesAsync(): Deferred<LanguageMap> = languageJob
     override fun getThemesAsync(): Deferred<ThemeMap> = themeJob
-    override fun getApplicationAsync(): Deferred<ApplicationMap> = applicationJob
+    override fun getApplicationsAsync(): Deferred<ApplicationMap> = applicationJob
 
     private fun readLanguages() = ClasspathLanguageSourceMap(this, read(pathLanguages, ::LanguageSource)).toLanguageMap()
     private fun readThemes() = ClasspathThemeSourceMap(this, read(pathThemes, ::ThemeSource)).toThemeMap()

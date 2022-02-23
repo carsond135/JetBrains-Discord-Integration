@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.impl
 
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SelectionValue
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.UiValueType
+import com.intellij.openapi.components.PersistentStateComponent
+import org.jdom.Element
 
-typealias IdleVisibilityValue = SelectionValue<IdleVisibility>
+abstract class PersistentStateOptionHolderImpl : PersistentStateComponent<Element>, OptionHolderImpl() {
+    override fun getState(): Element? = Element("dummy").apply(::writeExternal)
 
-enum class IdleVisibility(
-    override val text: String,
-    override val description: String? = null
-) : UiValueType {
-    IGNORE("Keep showing rich presence"),
-    IDLE("Show \"Idling\""),
-    HIDE("Hide completely");
+    override fun loadState(state: Element): Unit = readExternal(state)
 }

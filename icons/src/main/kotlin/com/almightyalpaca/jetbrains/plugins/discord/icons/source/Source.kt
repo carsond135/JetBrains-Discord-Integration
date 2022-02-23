@@ -22,7 +22,7 @@ import kotlinx.coroutines.Deferred
 interface Source {
     fun getLanguagesAsync(): Deferred<LanguageMap>
     fun getThemesAsync(): Deferred<ThemeMap>
-    fun getApplicationAsync(): Deferred<ApplicationMap>
+    fun getApplicationsAsync(): Deferred<ApplicationMap>
 
     suspend fun getLanguages(): LanguageMap = getLanguagesAsync().await()
     suspend fun getThemes(): ThemeMap = getThemesAsync().await()

@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.gui.preview
 
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SelectionValue
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.UiValueType
+import java.awt.image.BufferedImage
 
-typealias IdleVisibilityValue = SelectionValue<IdleVisibility>
-
-enum class IdleVisibility(
-    override val text: String,
-    override val description: String? = null
-) : UiValueType {
-    IGNORE("Keep showing rich presence"),
-    IDLE("Show \"Idling\""),
-    HIDE("Hide completely");
-}
+data class ModifiedImage(val modified: Boolean, val image: BufferedImage)

@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.render
 
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SelectionValue
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.UiValueType
-
-typealias IdleVisibilityValue = SelectionValue<IdleVisibility>
-
-enum class IdleVisibility(
-    override val text: String,
-    override val description: String? = null
-) : UiValueType {
-    IGNORE("Keep showing rich presence"),
-    IDLE("Show \"Idling\""),
-    HIDE("Hide completely");
+class IdleRenderer(context: RenderContext) : {
 }

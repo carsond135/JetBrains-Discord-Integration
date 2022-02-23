@@ -57,7 +57,7 @@ class LocalSource(location: Path, retry: Boolean = true) : Source, CoroutineScop
 
     override fun getLanguagesAsync(): Deferred<LanguageMap> = languageJob
     override fun getThemesAsync(): Deferred<ThemeMap> = themeJob
-    override fun getApplicationAsync(): Deferred<ApplicationMap> = applicationJob
+    override fun getApplicationsAsync(): Deferred<ApplicationMap> = applicationJob
 
     private fun readLanguages() = LocalLanguageSourceMap(this, read(pathLanguages, ::LanguageSource)).toLanguageMap()
     private fun readThemes() = LocalThemeSourceMap(this, read(pathThemes, ::ThemeSource)).toThemeMap()
