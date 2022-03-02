@@ -16,6 +16,7 @@
 
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types
 
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.render.templates.CustomTemplate
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.OptionCreator
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.impl.OptionProviderImpl
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.utils.Plugin
@@ -95,10 +96,10 @@ class TemplateOption(text: String, description: String?, initialValue: String) :
             componentImpl.text = value.template
         }
 
-    override fun addChangeListener(listener: (CustomTemplate) -> Unit) = throw UnsupportedOptionsException("Not implemented")
+    override fun addChangeListener(listener: (CustomTemplate) -> Unit) = throw UnsupportedOperationException("Not implemented")
 
     override val isModified
-        get() = currentValue.template != componentImp.text.trim()
+        get() = currentValue.template != componentImpl.text.trim()
 
     override fun apply() {
         currentValue = CustomTemplate(componentImpl.text)
