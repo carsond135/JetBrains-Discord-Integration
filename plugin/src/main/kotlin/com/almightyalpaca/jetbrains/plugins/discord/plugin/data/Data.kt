@@ -43,6 +43,11 @@ sealed class Data {
     }
 
     open class Project(
-        application
+        applicationName: String,
+        applicationVersion: String,
+        applicationTimeOpened: Long,
+        applicationTimeActive: Long,
+        applicationSettings: ApplicationSettings,
+
     )
 }
