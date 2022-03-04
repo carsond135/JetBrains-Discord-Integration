@@ -17,6 +17,8 @@
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings
 
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.OptionHolder
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.BooleanValue
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.StringValue
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values.ProjectShowValue
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.service

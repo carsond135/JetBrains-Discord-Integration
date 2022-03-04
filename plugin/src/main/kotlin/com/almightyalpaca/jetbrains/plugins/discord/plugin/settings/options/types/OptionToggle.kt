@@ -150,6 +150,6 @@ class Toggle<T>(private val optionToggle: OptionToggle<T>) : Value() {
     }
 
     interface Provider<T> : Value.Provider {
-        override fun getValue(thisRef: OptionHolder, property: KProperty<*>): Toggle<T>
+        override operator fun getValue(thisRef: OptionHolder, property: KProperty<*>): Toggle<T>
     }
 }
