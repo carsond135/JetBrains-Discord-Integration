@@ -19,6 +19,8 @@ package com.almightyalpaca.jetbrains.plugins.discord.plugin.render
 import com.almightyalpaca.jetbrains.plugins.discord.icons.source.IconSet
 import com.almightyalpaca.jetbrains.plugins.discord.icons.source.Source
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.data.Data
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SimpleValue
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.settings
 
 class RenderContext(val source: Source, val data: Data, val mode: Renderer.Mode) {
     val icons: IconSet? by lazy {

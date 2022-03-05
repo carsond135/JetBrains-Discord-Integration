@@ -17,7 +17,7 @@
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values
 
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.render.RenderContext
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SelectionValue
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SimpleValue
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.UiValueType
 
 typealias TimeValue = SimpleValue<PresenceTime>

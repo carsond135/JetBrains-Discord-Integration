@@ -15,3 +15,40 @@
  */
 
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values
+
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.SimpleValue
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.types.UiValueType
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.utils.lowercase
+import com.intellij.openapi.application.ApplicationNamesInfo
+import java.util.*
+
+typealias ApplicationTypeValue = SimpleValue<ApplicationType>
+
+enum class ApplicationType(override val text: String, override val description: String? = null) : UiValueType {
+    JETBRAINS("JetBrains IDE") {
+        override val applicationNameReadable = "JetBrains IDE"
+    },
+    IDE("IDE Name", description = "e.g. IntelliJ IDEA") {
+        override val applicationNameReadable: String by lazy {
+            ApplicationNamesInfo.getInstance()
+                .fullProductName
+        }
+    },
+    IDE_EDITION("IDE Name and Edition", description = "e.g. IntelliJ IDEA Ultimate") {
+        override val applicationNameReadable: String by lazy {
+            ApplicationNamesInfo.getInstance()
+                .fullProductNameWithEdition
+                .replace("Edition", "")
+                .trim()
+        }
+    };
+
+    abstract val applicationNameReadable: String
+
+    val applicationName by lazy {
+        applicationNameReadable.split(' ')
+            .asSequence()
+            .map { it.lowercase() }
+            .joinToString(separator = "_")
+    }
+}

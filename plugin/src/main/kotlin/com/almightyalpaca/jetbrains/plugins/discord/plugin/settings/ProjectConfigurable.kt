@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package com.almightyalpaca.jetbrains.plugins.discord.plugin.actions
+package com.almightyalpaca.jetbrains.plugins.discord.plugin.settings
 
-import com.almightyalpaca.jetbrains.plugins.discord.plugin.DiscordPlugin
-import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.project.DumbAwareAction
+import com.intellij.openapi.options.SearchableConfigurable
+import com.intellij.openapi.project.Project
 
-class ForceReconnectAction : DumbAwareAction("Force reconnect") {
-    override fun actionPerformed(e: AnActionEvent) {
-        DiscordPlugin.LOG.info("Forcing manual reconnect")
+class ProjectConfigurable(val project: Project) : SearchableConfigurable {
+    private val settings = project.settings
 
-        rpcService.update(null)
+    override fun getId() = "discord-project"
 
-        renderService.render
+    override fun isModified(): Boolean = settings.isModified
+
+    override fun getDisplayName() = "Discord Integration Project Settings"
+
+    override fun apply() {
+        settings.apply()
+
+        renderService.render()
     }
 }

@@ -23,6 +23,13 @@ class FileRenderer(context: RenderContext) : Renderer(context) {
         details = settings.fileDetails,
         detailsCustom = settings.fileDetailsCustom,
         state = settings.fileState,
-        stateCustom
+        stateCustom = settings.fileStateCustom,
+        largeIcon = settings.fileIconLarge,
+        largeIconText = settings.fileIconLargeText,
+        largeIconTextCustom = settings.fileIconLargeTextCustom,
+        smallIcon = settings.fileIconSmall,
+        smallIconText = settings.fileIconSmallText,
+        smallIconTextCustom = settings.fileIconSmallTextCustom,
+        startTimestamp = settings.fileTime
     )
 }
