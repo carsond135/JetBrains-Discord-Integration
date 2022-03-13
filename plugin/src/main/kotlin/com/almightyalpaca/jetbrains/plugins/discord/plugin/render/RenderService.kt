@@ -17,15 +17,21 @@
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.render
 
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.DiscordPlugin
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.data.dataService
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.rpc.rpcService
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.source.sourceService
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.utils.DisposableCoroutineScope
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.utils.scheduleWithFixedDelay
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
+import com.intellij.openapi.progress.ProcessCanceledException
 import com.intellij.openapi.util.Disposer
+import com.intellij.util.concurrency.AppExecutorUtil
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.apache.tools.ant.taskdefs.Execute.launch
 import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 
 val renderService: RenderService
     get() = service()
@@ -54,6 +60,39 @@ class RenderService : DisposableCoroutineScope {
             }
 
             val data = dataService.getData(Renderer.Mode.NORMAL) ?: return@launch
+
+            val context = RenderContext(sourceService.source, data, Renderer.Mode.NORMAL)
+
+            val renderer = context.createRenderer()
+            val presence = renderer?.render()
+
+            if (presence == null) {
+                DiscordPlugin.LOG.debug("Render result: visible")
+            } else {
+                DiscordPlugin.LOG.debug("Render result: hidden")
+            }
+
+            rpcService.update(presence, force)
+
+            renderJob = null
         }
+    }
+
+    fun startRenderClock() {
+        val executor = AppExecutorUtil.getAppScheduledExecutorService()
+
+        this.renderClockJob = executor.scheduleWithFixedDelay(delay = 5, unit = TimeUnit.SECONDS) {
+            try {
+                render()
+            } catch (e: ProcessCanceledException) {
+                throw e
+            } catch (e: Exception) {
+                DiscordPlugin.LOG.error("Error rendering presence", e)
+            }
+        }
+    }
+
+    override fun dispose() {
+        renderClockJob?.cancel(true)
     }
 }
