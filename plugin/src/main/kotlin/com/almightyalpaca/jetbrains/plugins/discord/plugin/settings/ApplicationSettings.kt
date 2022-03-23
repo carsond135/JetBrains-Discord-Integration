@@ -73,7 +73,7 @@ interface ApplicationSettings : PersistentStateComponent<Element>, OptionHolder 
     val fileIconSmallTextCustom: TemplateValue
     val fileTime: TimeValue
 
-    val applicationType: ApplicationType
+    val applicationType: ApplicationTypeValue
     val theme: ThemeValue
 
     val applicationLastUpdateNotification: StringValue

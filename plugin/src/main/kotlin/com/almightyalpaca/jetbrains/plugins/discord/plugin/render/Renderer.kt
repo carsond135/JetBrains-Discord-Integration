@@ -75,7 +75,7 @@ abstract class Renderer(protected val context: RenderContext) {
 
             this@presence.startTimestamp = when (val time = startTimestamp?.getValue()?.get(context)) {
                 null, PresenceTime.Result.Empty -> null
-                is PresenceText.Result.Time ->
+                is PresenceTime.Result.Time ->
                     OffsetDateTime.ofInstant(
                         Instant.ofEpochMilli(time.value),
                         ZoneId.systemDefault()
@@ -148,7 +148,7 @@ abstract class Renderer(protected val context: RenderContext) {
             companion object : Project()
         }
 
-        open class None protected constructor() : Project() {
+        open class File protected constructor() : Project() {
             override fun createRenderer(context: RenderContext): Renderer = FileRenderer(context)
 
             companion object : File()

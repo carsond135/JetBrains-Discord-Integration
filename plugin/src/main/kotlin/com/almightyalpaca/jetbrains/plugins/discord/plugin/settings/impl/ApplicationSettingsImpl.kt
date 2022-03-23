@@ -22,11 +22,14 @@ import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.options.type
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values.*
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
+import java.util.concurrent.TimeUnit
 
 @Suppress("unused")
 @State(name = "DiscordApplicationSettings", storages = [Storage("discord.xml")])
 class ApplicationSettingsImpl : ApplicationSettings, PersistentStateOptionHolderImpl() {
     override val show by check("Enable Rich Presence", true)
+
+    /* ========== Timeout / Idle ========== */
 
     private val timeoutOptionPair by pair()
     override val timeoutMinutes by timeoutOptionPair.first.spinner(
@@ -40,9 +43,13 @@ class ApplicationSettingsImpl : ApplicationSettings, PersistentStateOptionHolder
 
     override val idle by selection(text = "While idle", "While the session is marked as idle", initialValue = IdleVisibility.IDLE)
 
+    /* ========== Layout ========== */
+
     private val layoutGroup by group("Layout")
     private val preview by layoutGroup.preview()
     private val tabs by preview.tabbed()
+
+    /* ---------- Application Tab ---------- */
 
     private val applicationTab = tabs["Application"]
     private val applicationInfo by applicationTab.info("Visible when no project is open")
@@ -69,6 +76,8 @@ class ApplicationSettingsImpl : ApplicationSettings, PersistentStateOptionHolder
 
     override val applicationTime by applicationTab.selection("Show elapsed time", PresenceTime.Application)
 
+    /* ---------- Project Tab ---------- */
+
     private val projectTab = tabs["Project"]
     private val projectInfo by projectTab.info("Visible when a project is open but no editor")
 
@@ -94,4 +103,45 @@ class ApplicationSettingsImpl : ApplicationSettings, PersistentStateOptionHolder
 
     override val projectTime by projectTab.selection("Show elapsed time", PresenceTime.Project)
 
+    /* ---------- File Tab ---------- */
+
+    private val fileTab = tabs["File"]
+    private val fileInfo by fileTab.info("Visible when a file is open but no editor")
+
+    private val fileDetailsToggle by fileTab.toggleable<PresenceText>()
+    override val fileDetails by fileDetailsToggle.enableOn(PresenceText.CUSTOM).selection("First line", PresenceText.File1)
+    override val fileDetailsCustom by fileDetailsToggle.option.template("Custom", "")
+
+    private val fileStateToggle by fileTab.toggleable<PresenceText>()
+    override val fileState by fileStateToggle.enableOn(PresenceText.CUSTOM).selection("Second line", PresenceText.File2)
+    override val fileStateCustom by fileStateToggle.option.template("Custom", "")
+
+    private val fileIconLargeToggle by fileTab.toggleable<PresenceIcon>()
+    override val fileIconLarge by fileIconLargeToggle.disableOn(PresenceIcon.NONE).selection("Large icon", PresenceIcon.Large.File)
+    private val fileIconLargeTextToggle by fileIconLargeToggle.option.toggleable<PresenceText>()
+    override val fileIconLargeText by fileIconLargeTextToggle.enableOn(PresenceText.CUSTOM).selection("Text", PresenceText.FileIconLarge)
+    override val fileIconLargeTextCustom by fileIconLargeTextToggle.option.template("Custom", "")
+
+    private val fileIconSmallToggle by fileTab.toggleable<PresenceIcon>()
+    override val fileIconSmall by fileIconSmallToggle.disableOn(PresenceIcon.NONE).selection("Small icon", PresenceIcon.Small.File)
+    private val fileIconSmallTextToggle by fileIconSmallToggle.option.toggleable<PresenceText>()
+    override val fileIconSmallText by fileIconSmallTextToggle.enableOn(PresenceText.CUSTOM).selection("Text", PresenceText.FileIconSmall)
+    override val fileIconSmallTextCustom by fileIconSmallTextToggle.option.template("Custom", "")
+
+    override val fileTime by fileTab.selection("Show elapsed time", PresenceTime.File)
+
+    override val filePrefixEnabled by fileTab.check("Prefix files names with Reading/Editing", true)
+
+    override val fileHideVcsIgnored by fileTab.check("Hide VCS ignored files", "E.g. files in your .gitignore", false)
+
+    /* ========== General Settings ========== */
+
+    override val applicationType by selection("Application name", ApplicationType.IDE_EDITION)
+    override val theme by themeChooser("Theme")
+
+    /* ---------- Hidden Settings ---------- */
+
+    private val hidden by hidden()
+
+    override val applicationLastUpdateNotification by hidden.text("<unused>", "")
 }

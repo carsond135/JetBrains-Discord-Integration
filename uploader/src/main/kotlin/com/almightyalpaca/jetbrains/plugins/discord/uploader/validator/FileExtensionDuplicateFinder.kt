@@ -72,7 +72,7 @@ private fun Matcher?.unwrap(): Sequence<Pair<String, Matcher>> = when (this) {
     is Matcher.Text.EndsWith -> sequenceOf(this).flatMap { it.strings.asSequence() }.map { it to this }
     is Matcher.Text.Contains -> sequenceOf(this).flatMap { it.strings.asSequence() }.map { it to this }
     is Matcher.Text.Equals -> sequenceOf(this).flatMap { it.strings.asSequence() }.map { it to this }
-    is Matcher.Text.RegEx -> sequenceOf(this).flatMap { it.expressions.asSequence() }.map { expression -> expression.toString() } }.map { it to this }
+    is Matcher.Text.RegEx -> sequenceOf(this).flatMap { it.expressions.asSequence().map { expression -> expression.toString() } }.map { it to this }
     is Matcher.Combining.All -> emptySequence()
     is Matcher.Combining.Any -> this.matchers.asSequence().flatMap { it.unwrap() }
     null -> emptySequence()
