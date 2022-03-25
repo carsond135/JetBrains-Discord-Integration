@@ -25,7 +25,7 @@ import javax.swing.JComponent
 
 @Suppress("DEPRECATION")
 open class HiddenOptionHolderImpl : OptionHolder {
-    override val options: LinkedHashMap<String, Option<*>>()
+    override val options = LinkedHashMap<String, Option<*>>()
 
     override val component: JComponent? = null
 

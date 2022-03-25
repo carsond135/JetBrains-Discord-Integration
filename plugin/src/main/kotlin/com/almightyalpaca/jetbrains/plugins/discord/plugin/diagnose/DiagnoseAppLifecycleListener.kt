@@ -17,6 +17,7 @@
 package com.almightyalpaca.jetbrains.plugins.discord.plugin.diagnose
 
 import com.almightyalpaca.jetbrains.plugins.discord.plugin.DiscordPlugin
+import com.almightyalpaca.jetbrains.plugins.discord.plugin.settings.values.ApplicationType
 import com.intellij.ide.AppLifecycleListener
 import com.intellij.openapi.project.Project
 

@@ -112,6 +112,6 @@ class OptionPreview : Option<Preview>(""), OptionCreator<Tabs>, Preview.Provider
 
 class Preview(private val option: OptionPreview) : Value(), OptionCreator<Tabs> by option {
     interface Provider : Value.Provider {
-        override operator fun getValue(thisRef: OptionHOlder, property: KProperty<*>): Preview
+        override operator fun getValue(thisRef: OptionHolder, property: KProperty<*>): Preview
     }
 }
