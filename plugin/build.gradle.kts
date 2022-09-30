@@ -84,36 +84,33 @@ configurations {
         if (name.contains("kotlin", ignoreCase = true) || name.contains("idea", ignoreCase = true)) {
             return@all
         }
-
-        resolutionStrategy.dependencySubstitution {
-            val ideaDependency = intellij.getIdeaDependency(project).let { "com.jetbrains:${it.name}:${it.version}" }
-
-            val ideaModules = listOf(
-                "org.jetbrains.kotlin:kotlin-reflect",
-                "org.jetbrains.kotlin:kotlin-stdlib",
-                "org.jetbrains.kotlin:kotlin-stdlib-common",
-                "org.jetbrains.kotlin:kotlin-stdlib-jdk7",
-                "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
-                "org.jetbrains.kotlin:kotlin-test",
-                "org.jetbrains.kotlin:kotlin-test-common",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-core",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-core-common",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8",
-                "org.slf4j:slf4j-api"
-            )
-
-            all action@{
-                val requested = requested as? ModuleComponentSelector ?: return@action
-
-                if ("${requested.group}:${requested.module}" in ideaModules) {
-                    useTarget(ideaDependency)
-                }
-            }
-        }
     }
 }
 
 tasks {
+    setupDependencies {
+        configurations {
+            all {
+                if (name.contains("kotlin", ignoreCase = true) || name.contains("idea", ignoreCase = true)) {
+                    return@all
+                }
+
+                exclude("org.jetbrains.kotlin", "kotlin-reflect")
+                exclude("org.jetbrains.kotlin", "kotlin-stdlib")
+                exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
+                exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk7")
+                exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
+                exclude("org.jetbrains.kotlin", "kotlin-test")
+                exclude("org.jetbrains.kotlin", "kotlin-test-common")
+                exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
+                exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-common")
+                exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-jdk8")
+                exclude("org.slf4j", "slf4j-api")
+
+            }
+        }
+    }
+
     val minimizedJar by registering(ShadowJar::class) {
         group = "build"
 
@@ -139,7 +136,7 @@ tasks {
 
     publishPlugin {
         if (project.extra.has("JETBRAINS_TOKEN")) {
-            token.set(project.extra["JETBRAINS_TOKEN"] as String?)
+            token(project.extra["JETBRAINS_TOKEN"] as String)
         } else {
             enabled = false
         }
@@ -153,6 +150,10 @@ tasks {
 
     buildPlugin {
         archiveBaseName(rootProject.name)
+    }
+
+    buildSearchableOptions {
+        enabled = false;
     }
 
     jarSearchableOptions {
@@ -176,7 +177,7 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
-            freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+            freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
 
@@ -189,10 +190,6 @@ tasks {
 
     compileKotlin {
         dependsOn(generateGrammarSource)
-    }
-
-    compileTestKotlin {
-        dependsOn(generateTestGrammarSource)
     }
 
     clean {

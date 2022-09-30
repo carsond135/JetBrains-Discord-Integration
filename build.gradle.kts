@@ -34,7 +34,6 @@ allprojects {
     }
 
     secret("DISCORD_TOKEN")
-    secret("BINTRAY_KEY")
     secret("JETBRAINS_TOKEN")
 }
 
@@ -50,17 +49,19 @@ subprojects {
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "11"
                 freeCompilerArgs += "-Xjvm-default=enable"
+
+                languageVersion = "1.4"
             }
         }
 
         withType<JavaCompile> {
-            targetCompatibility = "1.8"
-            sourceCompatibility = "1.8"
+            targetCompatibility = "11"
+            sourceCompatibility = "11"
 
             if (JavaVersion.current() >= JavaVersion.VERSION_1_9) {
-                options.compilerArgs as MutableList<String> += listOf("--release", "8")
+                options.compilerArgs as MutableList<String> += listOf("--release", "11")
             }
         }
     }
@@ -73,12 +74,13 @@ tasks {
         gradleReleaseChannel = GradleReleaseChannel.CURRENT.toString()
 
         rejectVersionIf {
-            sequenceOf("alpha", "beta", "rc", "cr", "m", "preview", "eap", "pr", "M")
-                .map { qualifier -> Regex("""[+_.-]?$qualifier[.\d-_]*$""", RegexOption.IGNORE_CASE) }
-                .any { regex -> regex.containsMatchIn(candidate.version) }
-        }
+            val preview = Regex("""[+_.-]?(alpha|beta|rc|cr|m|preview|eap|pr|M)[.\d-_]*$""", RegexOption.IGNORE_CASE)
+                .containsMatchIn(candidate.version)
 
-        rejectVersionIf { candidate.group.startsWith("org.jetbrains.kotlin") && candidate.version != currentVersion }
+            val wrongKotlinVersion = candidate.group.startsWith("org.jetbrains.kotlin") && candidate.version != currentVersion
+
+            return@rejectVersionIf preview || wrongKotlinVersion
+        }
     }
 
     withType<Wrapper> {
@@ -88,7 +90,7 @@ tasks {
         gradleVersion = versionGradle
     }
 
-    register<Delete>("clean") {
+    create<Delete>("clean") {
         group = "build"
 
         val regex = Regex("""JetBrains-Discord-Integration-\d+.\d+.\d+(?:\+\d+)?.zip""")
@@ -100,7 +102,7 @@ tasks {
         delete(project.buildDir)
     }
 
-    register("default") {
+    create("default") {
         val buildPlugin = project.tasks.getByPath("plugin:buildPlugin") as Zip
 
         dependsOn(buildPlugin)
@@ -113,7 +115,7 @@ tasks {
         }
     }
 
-    register<Delete>("clean-sandbox") {
+    create<Delete>("clean-sandbox") {
         group = "build"
 
         delete(project.file(".sandbox"))

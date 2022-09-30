@@ -146,7 +146,7 @@ private fun Project.createTasks(configuration: DockerConfiguration) {
 
             commandLine = listOf(
                 "docker", "buildx", "build",
-                "--platform", "linux,amd64,linux/arm64,linux/arm/v7",
+                "--platform", "linux/amd64,linux/arm64,linux/arm/v7",
                 "--tag", configuration.tag,
                 "--push",
                 "."
