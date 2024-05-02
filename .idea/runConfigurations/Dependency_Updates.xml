@@ -11,7 +11,7 @@
       <option name="taskNames">
         <list />
       </option>
-      <option name="taskAndArguments" value="dependencyUpdates" />
+      <option name="tasksAndArguments" value="dependencyUpdates" />
       <option name="vmOptions" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>

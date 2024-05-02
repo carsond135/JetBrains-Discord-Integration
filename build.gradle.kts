@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017-2020 Aljoscha Grebe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 @file:Suppress("SuspiciousCollectionReassignment")
 
 import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
@@ -7,14 +23,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.nio.file.Files
 
 plugins {
-    kotlin("jvm") apply false
-    id("com.github.ben-manes.versions")
-    id("com.palantir.git-version")
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.versions)
+    alias(libs.plugins.gitversion)
+
+    id("buildUtils")
 }
 
 group = "com.almightyalpaca.jetbrains.plugins.discord"
 
-val versionDetails: Closure<VersionDetails> by project.extra
+val versionDetails: Closure<VersionDetails> by extra
 
 var version = versionDetails().lastTag.removePrefix("v")
 version += when (versionDetails().commitDistance) {
@@ -25,10 +43,6 @@ version += when (versionDetails().commitDistance) {
 project.version = version
 
 allprojects {
-    repositories {
-        mavenCentral()
-    }
-
     fun secret(name: String) {
         project.extra[name] = System.getenv(name) ?: return
     }
@@ -38,7 +52,7 @@ allprojects {
 }
 
 subprojects {
-    group = rootProject.group.toString() + "." + project.name.toLowerCase()
+    group = rootProject.group.toString() + "." + project.name.lowercase()
     version = rootProject.version
 
     val secrets: File = rootProject.file("secrets.gradle.kts")
@@ -46,22 +60,19 @@ subprojects {
         apply(from = secrets)
     }
 
+    repositories {
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "11"
-                freeCompilerArgs += "-Xjvm-default=enable"
+                jvmTarget = libs.versions.jdk.get()
+                freeCompilerArgs += "-Xjvm-default=all"
 
-                languageVersion = "1.4"
-            }
-        }
-
-        withType<JavaCompile> {
-            targetCompatibility = "11"
-            sourceCompatibility = "11"
-
-            if (JavaVersion.current() >= JavaVersion.VERSION_1_9) {
-                options.compilerArgs as MutableList<String> += listOf("--release", "11")
+                apiVersion = kotlinLanguageVersion(libs.versions.kotlin.ide())
+                languageVersion = kotlinLanguageVersion(libs.versions.kotlin.ide())
             }
         }
     }
@@ -83,13 +94,6 @@ tasks {
         }
     }
 
-    withType<Wrapper> {
-        val versionGradle: String by project
-
-        distributionType = Wrapper.DistributionType.BIN
-        gradleVersion = versionGradle
-    }
-
     create<Delete>("clean") {
         group = "build"
 
@@ -99,7 +103,7 @@ tasks {
             .filter { p -> regex.matches(p.fileName.toString()) }
             .forEach { p -> delete(p) }
 
-        delete(project.buildDir)
+        delete(project.layout.buildDirectory)
     }
 
     create("default") {
@@ -121,3 +125,4 @@ tasks {
         delete(project.file(".sandbox"))
     }
 }
+

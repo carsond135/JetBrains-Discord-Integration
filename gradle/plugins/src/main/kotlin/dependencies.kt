@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-val DISCORD_TOKEN by extra { "<TOKEN>" }
-val JETBRAINS_TOKEN by extra { "<TOKEN>" }
+fun ktor(module: String, version: String? = null) = "io.ktor:ktor-$module:${version ?: ""}"
+
+fun kotlinx(module: String, version: String? = null) = "org.jetbrains.kotlinx:kotlinx-$module:${version ?: ""}"

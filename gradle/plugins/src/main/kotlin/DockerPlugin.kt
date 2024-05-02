@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017-2020 Aljoscha Grebe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.Action
 import org.gradle.api.Plugin
@@ -9,6 +25,7 @@ import org.gradle.api.tasks.TaskContainer
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.get
 import java.io.File
+import java.util.*
 
 fun Project.docker(action: DockerExtension.() -> Unit) = configure(action)
 
@@ -22,7 +39,7 @@ class DockerExtension(private val project: Project) {
     private val configurations = mutableMapOf<String, DockerConfiguration>()
 
     operator fun String.invoke(action: DockerConfiguration.() -> Unit): DockerConfiguration {
-        return configurations.computeIfAbsent(this.toLowerCase()) { DockerConfiguration(this, project) }.apply(action)
+        return configurations.computeIfAbsent(this.lowercase()) { DockerConfiguration(this, project) }.apply(action)
     }
 }
 
@@ -41,7 +58,7 @@ class DockerConfiguration(val name: String, project: Project) {
 private fun Project.createTasks(configuration: DockerConfiguration) {
     val dockerBuildDir = File(buildDir, "docker")
 
-    val name = configuration.name.capitalize()
+    val name = configuration.name.replaceFirstChar { it.titlecase() }
 
     tasks.apply {
         val dockerCopy = register<Sync>("docker${name}Copy") {
@@ -64,6 +81,10 @@ private fun Project.createTasks(configuration: DockerConfiguration) {
         val dockerContextCreate = register<Exec>("docker${name}ContextCreate") {
             group = "docker"
             description = "Creates Docker build context"
+
+            //                errorOutput = OutputStream.nullOutputStream()
+            //                standardOutput = OutputStream.nullOutputStream()
+            //                standardInput = InputStream.nullInputStream()
 
             isIgnoreExitValue = true
 
@@ -129,6 +150,8 @@ private fun Project.createTasks(configuration: DockerConfiguration) {
 
             commandLine = listOf(
                 "docker", "buildx", "build",
+                // TODO: build and export multi-arch manifest as soon as Docker supports it
+                // "--platform", "linux/amd64,linux/arm/v7",
                 "--platform", configuration.localArchitecture,
                 "--tag", configuration.tag,
                 "--load",

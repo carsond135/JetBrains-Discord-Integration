@@ -11,7 +11,7 @@
       <option name="taskNames">
         <list />
       </option>
-      <option name="taskAndArguments" value="generate-icons" />
+      <option name="tasksAndArguments" value="generate-icons" />
       <option name="vmOptions" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>

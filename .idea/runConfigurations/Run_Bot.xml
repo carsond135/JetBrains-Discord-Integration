@@ -11,7 +11,7 @@
       <option name="taskNames">
         <list />
       </option>
-      <option name="taskAndArguments" value="run" />
+      <option name="tasksAndArguments" value="run" />
       <option name="vmOptions" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
